@@ -39,6 +39,12 @@ body {
     margin: 20px 0;
 }
 
+#chat_wrap #chat_messages li > .date {
+    font-size: 10px;
+    font-style: italic;
+    color: #949494;
+}
+
 .msg_input_area {
     position: absolute;
     bottom: 0;

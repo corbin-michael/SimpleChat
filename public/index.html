@@ -42,9 +42,9 @@
                 </ul>
             </div>
 
-            <form ng-submit="addMessage()" class="msg_input_area">
-                <input type="text" ng-model="newMessage" placeholder="Type message here..."  /><br />
-                <button type="submit">Send</button>
+            <form ng-submit="addMessage()" ng-model="msg_input_area" class="msg_input_area">
+                <input type="text" ng-model="newMessage" placeholder="Type message here..."  required /><br />
+                <button type="submit" ng-disabled="msg_input_area.$invalid">Send</button>
             </form>
         </div>
 
