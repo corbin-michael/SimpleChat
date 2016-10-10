@@ -31,34 +31,22 @@
     </head>
     <body ng-app="SimpleChat">
 
-
-
-
-
-
         <div id="chat_wrap" ng-controller="ChatCtrl">
+            <p class="edit">Edit</p>
             <div id="chat_messages">
                 <ul>
-                    <li ng-repeat="message in messages">
+                    <li ng-repeat="message in messages | orderBy: '-timeStamp'">
                         <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
                         <span class="msg">{{message.text}}</span>
                     </li>
                 </ul>
             </div>
 
-            <h2>{{messages.text}}</h2>
-            <input type="text" ng-model="newMessage" placeholder="Type message here..."  />
-            <button ng-click="addMessage()">Send</button>
+            <form ng-submit="addMessage()" class="msg_input_area">
+                <input type="text" ng-model="newMessage" placeholder="Type message here..."  /><br />
+                <button type="submit">Send</button>
+            </form>
         </div>
-
-
-
-
-
-
-
-
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/app.js"></script>
