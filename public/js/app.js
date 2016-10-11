@@ -1,6 +1,9 @@
 var app = angular.module("SimpleChat", ["firebase"]);
 
-app.controller("ChatCtrl", ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
+app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($scope, $firebaseArray, $timeout) {
+    // delete timer bool
+    $scope.deleteAlert = false;
+
     // ref to DB
     var messagesRef = firebase.database().ref().child("messages");
     // var query = messagesRef.orderByChild("timeStamp");
@@ -16,5 +19,15 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', function($scope, $fireba
         });
         // clear message input area
         $scope.newMessage = "";
+    };
+
+    // delete message from messages/DB
+    $scope.deleteMessage = function(message) {
+        $scope.messages.$remove(message).then(function(messagesRef) {
+            $scope.deleteAlert = true;
+            $timeout(function () {
+                $scope.deleteAlert = false;
+            }, 3000);
+        });
     };
 }]);

@@ -33,11 +33,13 @@
 
         <div id="chat_wrap" ng-controller="ChatCtrl">
             <p class="edit">Edit</p>
+            <p ng-show="deleteAlert">Message deleted forever!</p>
             <div id="chat_messages">
                 <ul>
                     <li ng-repeat="message in messages | orderBy: '-timeStamp'">
                         <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
                         <span class="msg">{{message.text}}</span>
+                        <span ng-click="deleteMessage(message)">X</span>
                     </li>
                 </ul>
             </div>
