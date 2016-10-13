@@ -1,5 +1,41 @@
 var app = angular.module("SimpleChat", ["firebase"]);
 
+app.controller("SignUpCtrl", ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
+    $scope.signedIn = false;
+
+    // if user is logged in change sigendIn variable to 'true'
+
+    // DB ref to user node
+    var userRef = firebase.database().ref().child("users");
+
+    // grab all users
+    $scope.users = $firebaseArray(userRef);
+
+    // Create user function
+    $scope.createUser = function() {
+        // create a user
+        firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).then(function(firebaseUser){
+            console.log(firebaseUser);
+            $scope.signedIn = true;
+            $scope.users.$add({
+                name: $scope.name,
+                username: $scope.username,
+                createdOn: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            // Clear form data
+            $scope.name = "";
+            $scope.username = "";
+            $scope.email = "";
+            $scope.password = "";
+        }).catch(function(error) {
+            console.log("Error: " + error);
+            // $scope.errorCode = error.code;
+            // $scope.errorMessage = error.message;
+        });
+    };
+}]);
+
 app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($scope, $firebaseArray, $timeout) {
     // delete timer bool
     $scope.deleteAlert = false;
@@ -21,6 +57,7 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($sc
     $scope.addMessage = function() {
         $scope.messages.$add({
             text: $scope.newMessage,
+            //user: $scope.user;
             timeStamp: firebase.database.ServerValue.TIMESTAMP
         });
         // clear message input area
@@ -33,7 +70,7 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($sc
             $scope.deleteAlert = true;
             $timeout(function () {
                 $scope.deleteAlert = false;
-            }, 3000);
+            }, 1700);
         });
     };
 }]);

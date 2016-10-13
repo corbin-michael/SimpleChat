@@ -6,6 +6,7 @@
         <title>Simple Chat</title>
         <meta name="author" content="Barstool Bets">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="https://use.fontawesome.com/5c1e058673.js"></script>
@@ -32,17 +33,34 @@
     </head>
     <body ng-app="SimpleChat">
 
-        <div id="chat_wrap" ng-controller="ChatCtrl">
-            <p class="edit" ng-click="toggleRemove()"><i class="fa fa-pencil-square" aria-hidden="true"></i></p>
-            <p ng-show="deleteAlert">Message deleted forever!</p>
-            <div id="chat_messages">
-                <ul>
-                    <li ng-repeat="message in messages | orderBy: '-timeStamp'">
-                        <span class="remove" ng-click="deleteMessage(message)" ng-show="showRemove"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
-                        <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
-                        <span class="msg">{{message.text}}</span>
-                    </li>
-                </ul>
+        <div ng-controller="SignUpCtrl">
+            <form ng-submit="createUser()">
+                <input type="text" ng-model="name" placeholder="Full Name" /><br />
+                <input type="text" ng-model="username" placeholder="Username" /><br />
+                <input type="text" ng-model="email" placeholder="Email" /><br />
+                <input type="text" ng-model="password" placeholder="Password" /><br />
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+
+
+        <div id="chat_container" ng-controller="ChatCtrl">
+            <p class="edit" ng-click="toggleRemove()"><i class="fa fa-pencil" aria-hidden="true"></i></p>
+
+            <div id="chat_wrap">
+                <div id="chat_messages">
+                    <ul>
+                        <li ng-repeat="message in messages | orderBy: '-timeStamp'">
+                            <span class="remove" ng-click="deleteMessage(message)" ng-show="showRemove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
+                            <span class="msg">{{message.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alertMessages">
+                <p ng-show="deleteAlert" class="deleteAlert"><span>Message deleted forever!</span></p>
             </div>
 
             <form ng-submit="addMessage()" ng-model="msg_input_area" class="msg_input_area">
@@ -51,7 +69,7 @@
             </form>
         </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
     <script src="js/app.js"></script>
     </body>
 </html>

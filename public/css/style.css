@@ -1,90 +1,132 @@
+h1, h2, h3, h4, h5, h6,
+p, li, span, a,
+input, label, button {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+}
+
+
 body {
     background-color: #f4f4f4;
 }
 
+#chat_container {
+    margin: 50px 15%;
+}
+
 #chat_wrap {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    right: 0;
-    width: 650px;
-    min-height: 450px;
-    margin: 0 auto;
+    margin: 25px auto 0;
     background-color: #fff;
     box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38)
 }
 
-#chat_wrap .edit {
-    text-align: right;
+.edit {
+    text-align: center;
     padding: 0 25px;
     margin-bottom: 0;
     color: darkgray;
-    font-size: 20px;
+    font-size: 25px;
+    background-color: #fff;
+    border-radius: 100%;
+    width: 15px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38);
 }
 
-#chat_wrap .edit:hover {
+.edit i {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.edit:hover {
     cursor: pointer;
     color: grey;
 }
 
-#chat_wrap #chat_messages {
+.remove {
+    color: #f15555;
+    position: relative;
+    font-size: 20px;
+}
+
+#chat_messages {
     clear: both;
 }
 
-#chat_wrap #chat_messages ul {
+#chat_messages ul {
     position: relative;
+    text-align: center;
     margin: 0;
-    padding-left: 25px;
+    padding: 0 5%;
     max-height: 335px;
     min-height: 335px;
     overflow: scroll;
     list-style: none;
 }
 
-#chat_wrap #chat_messages li {
+#chat_messages li {
     position: relative;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 550px;
 }
 
-.remove {
-    color: red;
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-}
 
-#chat_wrap #chat_messages li > .date {
-    font-size: 10px;
+
+#chat_messages li > .date {
+    font-size: 12px;
     font-style: italic;
     color: #949494;
 }
 
-#chat_wrap #chat_messages li > .msg {
+#chat_messages li > .msg {
     display: block;
 }
 
-.msg_input_area {
-    position: absolute;
-    bottom: 0;
+.alertMessages {
+    height: 25px;
     width: 100%;
+}
+.alertMessages p {
+    color: #fff;
+    text-align: center;
+    background-color: #f15555;
+    margin: 0;
+    position: relative;
+    height: 25px;
+}
+
+.alertMessages p span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.msg_input_area {
+    /*position: absolute;
+    bottom: 0;
+    width: 100%;*/
 }
 
 .msg_input_area > input {
-    width: 610px;
+    width: calc(100% - 20px);
     height: 40px;
-    padding: 0 20px;
+    padding: 0 0 0 20px;
     border: 0;
-    background-color: #f4f4f4;
+    background-color: #fff;
 }
 .msg_input_area > input:focus {
     border: none;
     outline: none;
 }
 .msg_input_area > button {
-    width: 650px;
+    width: 100%;
     height: 40px;
     border: 0;
     background: #17c5c1;
