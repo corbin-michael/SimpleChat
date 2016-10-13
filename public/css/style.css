@@ -19,6 +19,13 @@ body {
     text-align: right;
     padding: 0 25px;
     margin-bottom: 0;
+    color: darkgray;
+    font-size: 20px;
+}
+
+#chat_wrap .edit:hover {
+    cursor: pointer;
+    color: grey;
 }
 
 #chat_wrap #chat_messages {
@@ -36,13 +43,27 @@ body {
 }
 
 #chat_wrap #chat_messages li {
+    position: relative;
     margin: 20px 0;
+}
+
+.remove {
+    color: red;
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
 }
 
 #chat_wrap #chat_messages li > .date {
     font-size: 10px;
     font-style: italic;
     color: #949494;
+}
+
+#chat_wrap #chat_messages li > .msg {
+    display: block;
 }
 
 .msg_input_area {

@@ -4,6 +4,12 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($sc
     // delete timer bool
     $scope.deleteAlert = false;
 
+    // show the remove message button
+    $scope.showRemove = false;
+    $scope.toggleRemove = function() {
+        $scope.showRemove = $scope.showRemove === false ? true: false;
+    };
+
     // ref to DB
     var messagesRef = firebase.database().ref().child("messages");
     // var query = messagesRef.orderByChild("timeStamp");
