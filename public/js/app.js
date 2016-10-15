@@ -1,29 +1,68 @@
 var app = angular.module("SimpleChat", ["firebase", "ngRoute"]);
 
+app.run(["$rootScope", "$location", function($rootScope, $location) {
+    $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+        // We can catch the error thrown when the $requireSignIn promise is rejected
+        // and redirect the user back to the home page
+        if (error === "AUTH_REQUIRED") {
+            $location.path("/");
+        }
+    });
+}]);
+
 app.config(function($routeProvider) {
-    $routeProvider.
-        when("/", {
+    $routeProvider
+        .when("/", {
             templateUrl: "templates/login.html",
-            controller: "LoginCtrl"
+            controller: "LoginCtrl",
+            resolve: {
+              // controller will not be loaded until $waitForSignIn resolves
+              // Auth refers to our $firebaseAuth wrapper in the factory below
+              "currentAuth": ["Auth", function(Auth) {
+                // $waitForSignIn returns a promise so the resolve waits for it to complete
+                return Auth.$waitForSignIn();
+              }]
+            }
         })
         .when("/signup", {
             templateUrl: "templates/signup.html",
-            controller: "SignUpCtrl"
+            controller: "SignUpCtrl",
+            resolve: {
+              // controller will not be loaded until $waitForSignIn resolves
+              // Auth refers to our $firebaseAuth wrapper in the factory below
+              "currentAuth": ["Auth", function(Auth) {
+                // $waitForSignIn returns a promise so the resolve waits for it to complete
+                return Auth.$waitForSignIn();
+              }]
+            }
         })
         .when("/chat", {
             templateUrl: "templates/chat.html",
-            controller: "ChatCtrl"
-        })
-        .otherwise("/chat", {
-            templateUrl: "templates/chat.html",
-            controller: "ChatCtrl"
+            controller: "ChatCtrl",
+            resolve: {
+              // controller will not be loaded until $requireSignIn resolves
+              // Auth refers to our $firebaseAuth wrapper in the factory below
+              "currentAuth": ["Auth", function(Auth) {
+                // $requireSignIn returns a promise so the resolve waits for it to complete
+                // If the promise is rejected, it will throw a $stateChangeError (see above)
+                return Auth.$requireSignIn();
+              }]
+            }
         });
 });
 
-app.controller("LoginCtrl", ['$scope', '$firebaseArray', '$location', function($scope, $firebaseArray, $location) {
+app.factory("Auth", ["$firebaseAuth",
+    function($firebaseAuth) {
+        return $firebaseAuth();
+    }
+]);
+
+app.controller("LoginCtrl", ['$scope', '$location', 'currentAuth', '$route', function($scope, $location, currentAuth, $route) {
     $scope.loginUser = function() {
-        firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password).then(function() {
-            $location.url('/chat');
+        firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password)
+        .then(function() {
+            $location.path('/chat');
+            $route.reload();
         }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -31,9 +70,10 @@ app.controller("LoginCtrl", ['$scope', '$firebaseArray', '$location', function($
             console.log("Error Code: " + errorCode + "Error Msg: " + errorMessage);
         });
     };
+
 }]);
 
-app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', function($scope, $firebaseArray, $location) {
+app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $location, currentAuth, $route) {
     $scope.signedIn = false;
 
     // if user is logged in change sigendIn variable to 'true'
@@ -56,8 +96,8 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', function(
                 createdOn: firebase.database.ServerValue.TIMESTAMP
             });
 
-            // on success redirect to chat area
-            $location.url('/chat');
+            $scope.path("/chat");
+            $route.reload();
 
             // Clear form data
             $scope.name = "";
@@ -72,15 +112,8 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', function(
     };
 }]);
 
-app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($scope, $firebaseArray, $timeout) {
-    firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    console.log(user.uid);
-  } else {
-    // No user is signed in.
-  }
-});
+app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $timeout, $location, currentAuth, $route) {
+
     // delete timer bool
     $scope.deleteAlert = false;
 
@@ -114,16 +147,17 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($sc
             $scope.deleteAlert = true;
             $timeout(function () {
                 $scope.deleteAlert = false;
-            }, 1700);
+            }, 1000);
         });
     };
-}]);
 
-app.controller("SignOutCtrl", ['$scope', '$location', function($scope, $location) {
+    // Sign User
     $scope.signOut = function() {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
-            $location.url('/#')
+            console.log("Logged out");
+            $location.url('/');
+            $route.reload();
         }, function(error) {
             // An error happened.
             console.log("Error: " + error);
