@@ -1,0 +1,24 @@
+<div id="chat_container" ng-controller="ChatCtrl">
+    <p class="edit" ng-click="toggleRemove()"><i class="fa fa-pencil" aria-hidden="true"></i></p>
+
+    <div id="chat_wrap">
+        <div id="chat_messages">
+            <ul>
+                <li ng-repeat="message in messages | orderBy: '-timeStamp'">
+                    <span class="remove" ng-click="deleteMessage(message)" ng-show="showRemove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
+                    <span class="msg">{{message.text}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="alertMessages">
+        <p ng-show="deleteAlert" class="deleteAlert"><span>Message deleted forever!</span></p>
+    </div>
+
+    <form ng-submit="addMessage()" ng-model="msg_input_area" class="msg_input_area">
+        <input type="text" ng-model="newMessage" placeholder="Type message here..."  required /><br />
+        <button type="submit" ng-disabled="msg_input_area.$invalid">Send</button>
+    </form>
+</div>

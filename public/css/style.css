@@ -1,3 +1,6 @@
+/************************************
+GENERAL
+************************************/
 h1, h2, h3, h4, h5, h6,
 p, li, span, a,
 input, label, button {
@@ -10,6 +13,10 @@ body {
     background-color: #f4f4f4;
 }
 
+
+/************************************
+CHAT
+************************************/
 #chat_container {
     margin: 50px 15%;
 }
@@ -75,8 +82,6 @@ body {
     max-width: 550px;
 }
 
-
-
 #chat_messages li > .date {
     font-size: 12px;
     font-style: italic;
@@ -135,4 +140,24 @@ body {
 .msg_input_area > button:hover {
     cursor: pointer;
     background: #17c5d5;
+}
+
+/************************************
+SIGNUP FORM
+************************************/
+#form_wrap {
+    text-align: center;
+    margin: 50px 15%;
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38);
+}
+
+#form_wrap form input {
+    margin: 15px 0;
+    width: 100%;
+    max-width: 400px;
+    height: 40px;
+    padding: 0 15px;
+    text-align: center;
 }

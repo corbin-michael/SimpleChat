@@ -1,6 +1,39 @@
-var app = angular.module("SimpleChat", ["firebase"]);
+var app = angular.module("SimpleChat", ["firebase", "ngRoute"]);
 
-app.controller("SignUpCtrl", ['$scope', '$firebaseArray', function($scope, $firebaseArray) {
+app.config(function($routeProvider) {
+    $routeProvider.
+        when("/", {
+            templateUrl: "templates/login.html",
+            controller: "LoginCtrl"
+        })
+        .when("/signup", {
+            templateUrl: "templates/signup.html",
+            controller: "SignUpCtrl"
+        })
+        .when("/chat", {
+            templateUrl: "templates/chat.html",
+            controller: "ChatCtrl"
+        })
+        .otherwise("/chat", {
+            templateUrl: "templates/chat.html",
+            controller: "ChatCtrl"
+        });
+});
+
+app.controller("LoginCtrl", ['$scope', '$firebaseArray', '$location', function($scope, $firebaseArray, $location) {
+    $scope.loginUser = function() {
+        firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password).then(function() {
+            $location.url('/chat');
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("Error Code: " + errorCode + "Error Msg: " + errorMessage);
+        });
+    };
+}]);
+
+app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', function($scope, $firebaseArray, $location) {
     $scope.signedIn = false;
 
     // if user is logged in change sigendIn variable to 'true'
@@ -23,6 +56,9 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', function($scope, $fire
                 createdOn: firebase.database.ServerValue.TIMESTAMP
             });
 
+            // on success redirect to chat area
+            $location.url('/chat');
+
             // Clear form data
             $scope.name = "";
             $scope.username = "";
@@ -37,6 +73,14 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', function($scope, $fire
 }]);
 
 app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($scope, $firebaseArray, $timeout) {
+    firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    console.log(user.uid);
+  } else {
+    // No user is signed in.
+  }
+});
     // delete timer bool
     $scope.deleteAlert = false;
 
@@ -71,6 +115,18 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', function($sc
             $timeout(function () {
                 $scope.deleteAlert = false;
             }, 1700);
+        });
+    };
+}]);
+
+app.controller("SignOutCtrl", ['$scope', '$location', function($scope, $location) {
+    $scope.signOut = function() {
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            $location.url('/#')
+        }, function(error) {
+            // An error happened.
+            console.log("Error: " + error);
         });
     };
 }]);
