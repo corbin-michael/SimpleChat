@@ -74,29 +74,25 @@ app.controller("LoginCtrl", ['$scope', '$location', 'currentAuth', '$route', fun
 }]);
 
 app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $location, currentAuth, $route) {
-    $scope.signedIn = false;
-
-    // if user is logged in change sigendIn variable to 'true'
 
     // DB ref to user node
     var userRef = firebase.database().ref().child("users");
-
-    // grab all users
-    $scope.users = $firebaseArray(userRef);
 
     // Create user function
     $scope.createUser = function() {
         // create a user
         firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).then(function(firebaseUser){
             console.log(firebaseUser);
-            $scope.signedIn = true;
-            $scope.users.$add({
+
+            // add user to the User node with uid
+            userRef.child(firebaseUser.uid).set({
                 name: $scope.name,
                 username: $scope.username,
+                uid: firebaseUser.uid,
                 createdOn: firebase.database.ServerValue.TIMESTAMP
             });
 
-            $scope.path("/chat");
+            $location.path("/chat");
             $route.reload();
 
             // Clear form data
@@ -114,6 +110,15 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentA
 
 app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $timeout, $location, currentAuth, $route) {
 
+    var currentUser = firebase.auth().currentUser;
+    $scope.userID = currentUser.uid;
+
+
+    firebase.database().ref().child('users/' + $scope.userID).once("value").then(function(snapshot){
+        $scope.alias = snapshot.val().username;
+    });
+
+
     // delete timer bool
     $scope.deleteAlert = false;
 
@@ -123,18 +128,18 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location',
         $scope.showRemove = $scope.showRemove === false ? true: false;
     };
 
-    // ref to DB
+    // ref to messages in DB
     var messagesRef = firebase.database().ref().child("messages");
-    // var query = messagesRef.orderByChild("timeStamp");
 
     // grab all messages from the database and store them in "messages"
     $scope.messages = $firebaseArray(messagesRef);
 
     // add message method to DB
-    $scope.addMessage = function() {
+    $scope.addMessage = function(newMessage, uid, person) {
         $scope.messages.$add({
-            text: $scope.newMessage,
-            //user: $scope.user;
+            text: newMessage,
+            userID: uid,
+            username: person,
             timeStamp: firebase.database.ServerValue.TIMESTAMP
         });
         // clear message input area
@@ -156,7 +161,7 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location',
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
             console.log("Logged out");
-            $location.url('/');
+            $location.path('/');
             $route.reload();
         }, function(error) {
             // An error happened.

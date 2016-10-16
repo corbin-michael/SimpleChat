@@ -1,4 +1,5 @@
 <div class="header">
+    <h1>{{alias}}</h1>
     <button ng-click="signOut()">Signout</button>
 </div>
 <div id="chat_container">
@@ -9,7 +10,8 @@
             <ul>
                 <li ng-repeat="message in messages | orderBy: '-timeStamp'">
                     <span class="remove" ng-click="deleteMessage(message)" ng-show="showRemove"><i class="fa fa-times" aria-hidden="true"></i></span>
-                    <span class="date">{{message.timeStamp | date:'MMM d, h:mm a'}}</span>
+                    <span class="from">{{message.username}}</span>
+                    <span class="date">{{message.timeStamp | date:'h:mm a'}}</span>
                     <span class="msg">{{message.text}}</span>
                 </li>
             </ul>
@@ -20,8 +22,8 @@
         <p ng-show="deleteAlert" class="deleteAlert"><span>Message deleted forever!</span></p>
     </div>
 
-    <form ng-submit="addMessage()" ng-model="msg_input_area" class="msg_input_area">
-        <input type="text" ng-model="newMessage" placeholder="Type message here..."  required /><br />
-        <button type="submit" ng-disabled="msg_input_area.$invalid">Send</button>
-    </form>
+
+    <input type="text" class="u-full-width" ng-model="newMessage" placeholder="Type message here..." /><br />
+    <button type="submit" class="u-full-width button-primary" ng-click="addMessage(newMessage,userID,alias)">Send</button> <br />
+
 </div>

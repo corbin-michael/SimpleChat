@@ -1,13 +1,14 @@
-<div id="form_wrap">
+<div class="row form_wrap">
 
-    <h1>Login players</h1>
+    <div class="column twelve">
+        <h1>Login players</h1>
+        <form ng-submit="loginUser()">
+            <input type="text" ng-model="email" placeholder="Email" class="u-full-width" /><br />
+            <input type="text" ng-model="password" placeholder="Password" class="u-full-width" /><br />
+            <input type="submit" value="Login" class="button-primary u-full-width" />
+        </form>
 
-    <form ng-submit="loginUser()">
-        <input type="text" ng-model="email" placeholder="Email" /><br />
-        <input type="text" ng-model="password" placeholder="Password" /><br />
-        <input type="submit" value="Login" />
-    </form>
-
-    <p>Or you can <a href="#/signup">Signup</a></p>
+        <p><a href="#/signup" class="button u-full-width signup other_btn">Signup</a></p>
+    </div>
 
 </div>
