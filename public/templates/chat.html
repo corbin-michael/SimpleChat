@@ -1,9 +1,5 @@
-<div class="header">
-    <h1>{{alias}}</h1>
-    <button ng-click="signOut()">Signout</button>
-</div>
 <div id="chat_container">
-    <p class="edit" ng-click="toggleRemove()"><i class="fa fa-pencil" aria-hidden="true"></i></p>
+    <p class="{{editClass}}" ng-click="toggleRemove()"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
 
     <div id="chat_wrap">
         <div id="chat_messages">
@@ -23,7 +19,9 @@
     </div>
 
 
-    <input type="text" class="u-full-width" ng-model="newMessage" placeholder="Type message here..." /><br />
-    <button type="submit" class="u-full-width button-primary" ng-click="addMessage(newMessage,userID,alias)">Send</button> <br />
+    <form ng-submit="addMessage(newMessage,userID,alias)">
+        <input type="text" class="u-full-width" ng-model="newMessage" placeholder="Type message here..." /><br />
+        <button type="submit" class="u-full-width button-primary">Send</button> <br />
+    </form>
 
 </div>

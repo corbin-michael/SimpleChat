@@ -48,6 +48,19 @@ app.config(function($routeProvider) {
                 return Auth.$requireSignIn();
               }]
             }
+        })
+        .when("/profile", {
+            templateUrl: "templates/profile.html",
+            controller: "ProfileCtrl",
+            resolve: {
+              // controller will not be loaded until $requireSignIn resolves
+              // Auth refers to our $firebaseAuth wrapper in the factory below
+              "currentAuth": ["Auth", function(Auth) {
+                // $requireSignIn returns a promise so the resolve waits for it to complete
+                // If the promise is rejected, it will throw a $stateChangeError (see above)
+                return Auth.$requireSignIn();
+              }]
+            }
         });
 });
 
@@ -92,7 +105,7 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentA
                 createdOn: firebase.database.ServerValue.TIMESTAMP
             });
 
-            $location.path("/chat");
+            $location.path("/chat");  // NEED TO CHANGE TO ProfileCtrl !!!!!!!!!
             $route.reload();
 
             // Clear form data
@@ -108,25 +121,61 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentA
     };
 }]);
 
+app.controller("HeaderCtrl", ['$scope', '$firebaseArray', '$location', '$route', function($scope, $firebaseArray, $location, $route) {
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // get username
+            firebase.database().ref().child('users/' + user.uid).once("value").then(function(snapshot){
+                $scope.alias = snapshot.val().username;
+            });
+            $scope.show = true;
+        } else {
+            // No user is signed in.
+            $scope.show = false;
+        }
+    });
+
+    // Sign User Out
+    $scope.signOut = function() {
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            console.log("Logged out");
+            $location.path('/');
+            $route.reload();
+        }, function(error) {
+            // An error happened.
+            console.log("Error: " + error);
+        });
+    };
+}]);
+
+app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $location, currentAuth, $route) {
+
+}]);
+
 app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $timeout, $location, currentAuth, $route) {
 
     var currentUser = firebase.auth().currentUser;
     $scope.userID = currentUser.uid;
-
-
-    firebase.database().ref().child('users/' + $scope.userID).once("value").then(function(snapshot){
-        $scope.alias = snapshot.val().username;
-    });
-
 
     // delete timer bool
     $scope.deleteAlert = false;
 
     // show the remove message button
     $scope.showRemove = false;
+    $scope.editClass = 'edit';
     $scope.toggleRemove = function() {
         $scope.showRemove = $scope.showRemove === false ? true: false;
+        if ( $scope.showRemove == false ) {
+                $scope.editClass = 'edit';
+        } else {
+                $scope.editClass = 'editActive';
+        }
     };
+
+
+
 
     // ref to messages in DB
     var messagesRef = firebase.database().ref().child("messages");
@@ -156,16 +205,5 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location',
         });
     };
 
-    // Sign User
-    $scope.signOut = function() {
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            console.log("Logged out");
-            $location.path('/');
-            $route.reload();
-        }, function(error) {
-            // An error happened.
-            console.log("Error: " + error);
-        });
-    };
+
 }]);

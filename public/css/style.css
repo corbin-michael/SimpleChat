@@ -22,6 +22,12 @@ body {
     color: #fff;
 }
 
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100% !important;
+    }
+}
+
 /************************************
 HEADER
 ************************************/
@@ -46,6 +52,11 @@ CHAT
 #chat_container {
     max-width: 750px;
     margin: 0 auto;
+}
+@media screen and (max-width: 768px) {
+    #chat_container {
+        max-width: 100%;
+    }
 }
 
 #chat_wrap {
@@ -82,6 +93,33 @@ CHAT
     color: grey;
 }
 
+.editActive {
+    text-align: center;
+    padding: 0 25px;
+    margin-bottom: 0;
+    color: #fff;
+    font-size: 25px;
+    background-color: #f15555;
+    border-radius: 100%;
+    width: 15px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38);
+}
+
+.editActive:hover {
+    cursor: pointer;
+}
+
+.editActive i {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .remove {
     color: #f15555;
     position: relative;
@@ -107,6 +145,10 @@ CHAT
     position: relative;
     margin: 20px auto;
     max-width: 550px;
+}
+
+#chat_messages li > .from {
+    font-weight: 300;
 }
 
 #chat_messages li > .date {
@@ -182,5 +224,68 @@ SIGNUP FORM
     max-width: 400px;
     height: 40px;
     padding: 0 15px;
+    text-align: center;
+}
+
+/************************************
+GROUPS
+************************************/
+.groups {
+
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+li.new_group:hover {
+    cursor: pointer;
+}
+li.new_group > i:before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+li.new_group:hover > i {
+    background-color: #6fdc6f;
+    color: #fff;
+}
+
+li.group {
+    width: 120px;
+    height: 155px;
+    position: relative;
+    margin: 25px;
+}
+
+li.group > i {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0;
+    color: darkgray;
+    font-size: 25px;
+    background-color: #fff;
+    border-radius: 100%;
+    display: block;
+    box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38);
+    text-align: center;
+    position: absolute;
+}
+
+li.group > span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     text-align: center;
 }

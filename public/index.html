@@ -35,6 +35,10 @@
     <body ng-app="SimpleChat">
 
         <div class="container">
+            <div class="header" ng-controller="HeaderCtrl" ng-show="show">
+                <h1><a href="#/profile">{{alias}}</a></h1>
+                <button ng-click="signOut()">Signout</button>
+            </div>
             <ng-view></ng-view>
         </div>
 
