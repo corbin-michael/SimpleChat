@@ -1,0 +1,7 @@
+{
+  "rules": {
+    // public read access
+    ".read": true,
+    ".write" : "auth != null"
+  }
+}
