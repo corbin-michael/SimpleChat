@@ -39,6 +39,20 @@ HEADER
 }
 .header h1 {
     float: left;
+    text-decoration: none;
+    font-size: 16px;
+}
+.header_img {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 100%;
+    float: left;
+}
+.header_img a > img {
+    width: 100%;
+    height: auto;
 }
 .header button {
     float: right;
@@ -49,6 +63,18 @@ HEADER
 /************************************
 CHAT
 ************************************/
+.profile_img {
+    width: 125px;
+    height: 125px;
+    margin: 0 auto;
+}
+
+.profile_img > img {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
 #chat_container {
     max-width: 750px;
     margin: 0 auto;
@@ -234,7 +260,7 @@ GROUPS
 
 }
 
-ul {
+.groups_listing {
     list-style: none;
     padding: 0;
     margin: 0;
