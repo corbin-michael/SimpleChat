@@ -78,6 +78,7 @@ app.controller("LoginCtrl", ['$scope', '$location', 'currentAuth', '$route', fun
             $route.reload();
         }).catch(function(error) {
             // Handle Errors here.
+            document.getElementById('error').innerHTML = "There was an error with the username or password you provided.";
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log("Error Code: " + errorCode + "Error Msg: " + errorMessage);
@@ -123,9 +124,7 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentA
             $scope.email = "";
             $scope.password = "";
         }).catch(function(error) {
-            console.log("Error: " + error);
-            // $scope.errorCode = error.code;
-            // $scope.errorMessage = error.message;
+            document.getElementById('error').innerHTML = error.message;
         });
     };
 }]);
