@@ -18,7 +18,7 @@
         <p ng-show="deleteAlert" class="deleteAlert"><span>Message deleted forever!</span></p>
     </div>
 
-
+    {{userID}} | {{alias}} | {{newMessage}}
     <form ng-submit="addMessage(newMessage,userID,alias)">
         <input type="text" class="u-full-width" ng-model="newMessage" placeholder="Type message here..." /><br />
         <button type="submit" class="u-full-width button-primary">Send</button> <br />

@@ -212,6 +212,7 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location',
     var user = firebase.auth().currentUser;
     $scope.userID = user.uid;
     $scope.imageSrc = user.photoURL;
+    $scope.alias = user.displayName;
 
     // delete timer bool
     $scope.deleteAlert = false;
