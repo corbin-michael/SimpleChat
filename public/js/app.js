@@ -70,11 +70,27 @@ app.factory("Auth", ["$firebaseAuth",
     }
 ]);
 
+app.factory("UserFac", ['$location', '$route', function($location, $route) {
+    var currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+        var factory = {
+            name: currentUser.displayName,
+            pic: currentUser.photoURL,
+            email: currentUser.email,
+            uid: currentUser.uid
+        };
+        return factory;
+    } else {
+        return "Nothing to show for user.";
+    }
+}]);
+
 app.controller("LoginCtrl", ['$scope', '$location', 'currentAuth', '$route', function($scope, $location, currentAuth, $route) {
     $scope.loginUser = function() {
         firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password)
         .then(function() {
-            $location.path('/chat');
+            var userName = firebase.auth().currentUser.displayName;
+            $location.path('/profile');
             $route.reload();
         }).catch(function(error) {
             // Handle Errors here.
@@ -89,30 +105,31 @@ app.controller("LoginCtrl", ['$scope', '$location', 'currentAuth', '$route', fun
 
 app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $location, currentAuth, $route) {
 
-    // DB ref to user node
-    var userRef = firebase.database().ref().child("users");
-
     // Create user function
     $scope.createUser = function() {
-        // create a user
-        firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).then(function(firebaseUser){
-            console.log(firebaseUser);
+        var email = $scope.email;
+        var password = $scope.password;
 
-            var userData = {
+        // create a user
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(firebaseUser){
+            console.log(firebaseUser);
+            // gather all the users input
+            var newUserData = {
                 name: $scope.name,
                 username: $scope.username,
-                uid: firebaseUser.uid,
-                createdOn: firebase.database.ServerValue.TIMESTAMP
+                uid: firebaseUser.uid
             }
-
+            // DB ref to user node
+            var userRef = firebase.database().ref().child("users");
             // add user to the User node with uid
-            userRef.child(firebaseUser.uid).set(userData);
+            userRef.child(firebaseUser.uid).set(newUserData);
 
+            // update firebase displayName with username
             var user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: $scope.username
             }).then(function() {
-                $location.path("/chat");  // NEED TO CHANGE TO ProfileCtrl !!!!!!!!!
+                $location.path("/profile/");
                 $route.reload();
             }, function(error) {
                 console.log("error adding: " + error);
@@ -129,49 +146,58 @@ app.controller("SignUpCtrl", ['$scope', '$firebaseArray', '$location', 'currentA
     };
 }]);
 
-app.controller("HeaderCtrl", ['$scope', '$firebaseArray', '$location', '$route', function($scope, $firebaseArray, $location, $route) {
+// app.controller("HeaderCtrl", ['$scope', '$firebaseArray', '$location', '$route', 'UserFac', function($scope, $firebaseArray, $location, $route, UserFac) {
+//     // don't show header if not logged in
+//     $scope.showHeader = false;
+//     // once logged in grab user data
+//     firebase.auth().onAuthStateChanged(function(user) {
+//         if (user) {
+//             $scope.alias = user.displayName;
+//             $scope.imageSrc = user.photoURL;
+//             $scope.userID = user.uid;
+//             //show Header when logged in
+//             $scope.showHeader = true;
+//         } else {
+//             console.log("From HeaderCtrl: Not signed in.");
+//             $scope.showHeader = false;
+//         }
+//     });
+//
+//     var user = firebase.auth().currentUser;
+//     if ( user ) {
+//         console.log("Header: Logged In");
+//     } else {
+//         console.log("Header: Logged Out");
+//     }
+//
+//
+// }]);
 
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // get username
-            $scope.alias = user.displayName;
-            $scope.profilePic = user.photoURL;
-            $scope.show = true;
-        } else {
-            // No user is signed in.
-            $scope.show = false;
-        }
+app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$route', '$routeParams', function($scope, $firebaseArray, $location, $route, $routeParams) {
+
+    // Get current user info
+    var user = firebase.auth().currentUser;
+    $scope.alias = user.displayName;
+    $scope.imageSrc = user.photoURL;
+
+    // check if profile image added/changed
+    var profileImg = document.getElementById('profileImg');
+    var userRef = firebase.database().ref('/users/' + user.uid);
+    userRef.on('value', function(snapshot) {
+        profileImg.src = snapshot.val().image;
     });
 
-    // Sign User Out
-    $scope.signOut = function() {
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            console.log("Logged out");
-            $location.path('/');
-            $route.reload();
-        }, function(error) {
-            // An error happened.
-            console.log("Error: " + error);
-        });
-    };
-}]);
-
-app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $location, currentAuth, $route) {
     // refs for file upload
     var fileProgress = document.getElementById('fileProgress');
     var fileBtn = document.getElementById('fileBtn');
-    var profileImg = document.getElementById('profileImg');
     var imgNotify = document.getElementById('imageNotify');
 
     // Listen for file selection
     fileBtn.addEventListener('change', function(e) {
         // get file
         var file = e.target.files[0];
-
         // create storage ref
         var storageRef = firebase.storage().ref('profilePics/' + file.name);
-
         // upload file
         var task = storageRef.put(file);
 
@@ -187,8 +213,9 @@ app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', 'current
             function() {
                 console.log("Done Uploading");
                 var photoUrl = task.snapshot.downloadURL;
-                profileImg.src = photoUrl;
+                // profileImg.src = photoUrl;
 
+                // add photoURL to Firebase Users
                 var user = firebase.auth().currentUser;
                 if (user) {
                     user.updateProfile({
@@ -197,6 +224,9 @@ app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', 'current
                         imgNotify.innerHTML = "Profile Image added successfully.";
                         fileProgress.value = 0;
                         fileBtn.value = "";
+                        firebase.database().ref().child('users/' + user.uid).update({
+                            image: photoUrl
+                        });
                     }, function(error) {
                         imgNotify.innherHTML = error;
                     });
@@ -206,13 +236,27 @@ app.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', 'current
             }
         );
     });
+
+    // Sign User Out
+    $scope.signOut = function() {
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            console.log("Logged out");
+            $location.path('/');
+            $route.reload();
+        }, function(error) {
+            // An error happened.
+            console.log("Error: " + error);
+        });
+    };
+
+
 }]);
 
-app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location', 'currentAuth', '$route', function($scope, $firebaseArray, $timeout, $location, currentAuth, $route) {
+app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location', '$route', function($scope, $firebaseArray, $timeout, $location, $route) {
     var user = firebase.auth().currentUser;
-    $scope.userID = user.uid;
-    $scope.imageSrc = user.photoURL;
     $scope.alias = user.displayName;
+    $scope.userID = user.uid;
 
     // delete timer bool
     $scope.deleteAlert = false;
@@ -256,6 +300,4 @@ app.controller("ChatCtrl", ['$scope', '$firebaseArray', '$timeout', '$location',
             }, 1000);
         });
     };
-
-
 }]);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="SimpleChat">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,21 +33,9 @@
         <!-- AngularFire -->
         <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
     </head>
-    <body ng-app="SimpleChat">
+    <body>
 
         <div class="container">
-            <div class="header" ng-controller="HeaderCtrl" ng-show="show">
-                <div ng-if="profilePic === null">
-                    <h1><a href="#/profile">{{alias}}</a></h1>
-                </div>
-                <div ng-if="profilePic" class="header_img">
-                    <a href="#/profile">
-                        <img ng-src="{{profilePic}}" alt="{{alias}}" title="{{alias}}" />
-                    </a>
-                </div>
-
-                <button ng-click="signOut()">Signout</button>
-            </div>
             <ng-view></ng-view>
         </div>
 

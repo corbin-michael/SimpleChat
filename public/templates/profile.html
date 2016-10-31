@@ -1,14 +1,23 @@
-<h1>My Groups</h1>
-
-<p id="imageNotify"></p>
-
-<div class="file_upload_wrap">
-    <progress value="0" max="100" id="fileProgress"></progress>
-    <input type="file" id="fileBtn" />
-    <img src="" id="profileImg" />
+<div id="header">
+    <div class="header_img">
+        <img ng-src="{{imageSrc}}" id="profileImg" />
+    </div>
+    <div class="header_name">
+        <h1>{{alias}}</h1>
+    </div>
 </div>
 
-<div class="groups">
+<div class="edit_profile profile_section">
+    <h1>Add Profile Picture</h1>
+    <p id="imageNotify"></p>
+    <div class="file_upload_wrap">
+        <progress value="0" max="100" id="fileProgress"></progress>
+        <input type="file" id="fileBtn" />
+    </div>
+</div>
+
+<div class="groups profile_section">
+    <h1>My Groups</h1>
     <ul class="groups_listing">
         <li class="group new_group"><i class="fa fa-plus" aria-hidden="true"></i><span>New Group</span></li>
         <li class="group">
@@ -16,3 +25,6 @@
         </li>
     </ul>
 </div>
+
+
+<button ng-click="signOut()" id="sign_out">Signout</button>
