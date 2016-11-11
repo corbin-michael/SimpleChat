@@ -7,7 +7,15 @@
     </div>
 </div>
 
-<div class="edit_profile profile_section">
+<div class="modal users_modal">
+    <ul>
+        <li ng-repeat="user in users">
+            
+        </li>
+    </ul>
+</div>
+
+<div class="edit_profile profile_section hide">
     <h1>Add Profile Picture</h1>
     <p id="imageNotify"></p>
     <div class="file_upload_wrap">
@@ -24,6 +32,17 @@
             <span>New Group</span>
         </li>
     </ul>
+</div>
+
+<div class="modal new_group_modal hide">
+    <h2>New Group</h2>
+    <form>
+        <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
+        <select class="group_friends" ng-model="friends">
+            <option value="">Name</option>
+        </select><br />
+        <input type="submit" value="Create Group" class="button-primary u-full-width" />
+    </form>
 </div>
 
 
