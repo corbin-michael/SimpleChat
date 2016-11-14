@@ -1,5 +1,5 @@
 <div id="header">
-    <div class="header_img">
+    <div class="header_img" ng-show="showProfileImage">
         <img ng-src="{{imageSrc}}" id="profileImg" />
     </div>
     <div class="header_name">
@@ -7,10 +7,15 @@
     </div>
 </div>
 
-<div class="modal users_modal">
+<div class="row">
+    <button class="button one-half column">Add Group</button>
+    <button class="button one-half column" ng-click="modalClick()">Friends</button>
+</div>
+
+<div class="modal users_modal" ng-hide="hideModal">
     <ul>
-        <li ng-repeat="user in users">
-            
+        <li ng-repeat="user in users" ng-if="user.uid != currentUID">
+            {{user.username}}
         </li>
     </ul>
 </div>
@@ -22,6 +27,7 @@
         <progress value="0" max="100" id="fileProgress"></progress>
         <input type="file" id="fileBtn" />
     </div>
+    <button class="alert_btn delete_propic" ng-click="deleteProPic()">Delete ProPic</button>
 </div>
 
 <div class="groups profile_section">
@@ -46,4 +52,4 @@
 </div>
 
 
-<button ng-click="signOut()" id="sign_out">Signout</button>
+<button ng-click="signOut()" class="alert_btn sign_out">Signout</button>

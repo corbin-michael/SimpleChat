@@ -68,11 +68,11 @@ HEADER
     width: 100%;
     height: auto;
 }
-#sign_out {
+.alert_btn {
     display: block;
     background-color: #f15555;
     color: #fff;
-    margin: 10px auto;
+    margin: 10px 0;
 }
 /************************************
 PROFILE GROUPS
@@ -81,8 +81,8 @@ PROFILE GROUPS
 
 }
 .profile_section h1 {
-    font-size: 18px;
-    text-align: center;
+    font-size: 24px;
+    text-align: left;
 }
 .groups {
 
