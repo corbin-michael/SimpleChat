@@ -8,16 +8,42 @@
 </div>
 
 <div class="row">
-    <button class="button one-half column">Add Group</button>
-    <button class="button one-half column" ng-click="modalClick()">Friends</button>
+    <button class="button one-half column" ng-click="groupModalClick()">Add Group</button>
+    <button class="button one-half column" ng-click="friendModalClick()">Friends</button>
 </div>
 
-<div class="modal users_modal" ng-hide="hideModal">
-    <ul>
-        <li ng-repeat="user in users" ng-if="user.uid != currentUID">
-            {{user.username}}
-        </li>
-    </ul>
+<div class="modal users_modal" ng-hide="hideFriendModal">
+    <div class="modal_content">
+        <button ng-click="friendModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <input type="text" ng-model="search_friend" placeholder="Search Friends" />
+        <ul>
+            <li ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">
+                <span class="friend_pic">
+                    <img ng-src="{{user.image}}" alt="{{user.username}}" />
+                </span>
+                <span class="friend_username">{{user.username}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal new_group_modal" ng-hide="hideGroupModal">
+    <div class="modal_content">
+        <button ng-click="groupModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h2>New Group</h2>
+        <form>
+            <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
+            <div class="group_friends">
+                <p ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">
+                    <span class="friend_pic">
+                        <img ng-src="{{user.image}}" alt="{{user.username}}" />
+                    </span>
+                    <span class="friend_username">{{user.username}}</span>
+                </p>
+            </div>
+            <input type="submit" value="Create Group" class="button-primary u-full-width" />
+        </form>
+    </div>
 </div>
 
 <div class="edit_profile profile_section hide">
@@ -40,16 +66,6 @@
     </ul>
 </div>
 
-<div class="modal new_group_modal hide">
-    <h2>New Group</h2>
-    <form>
-        <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
-        <select class="group_friends" ng-model="friends">
-            <option value="">Name</option>
-        </select><br />
-        <input type="submit" value="Create Group" class="button-primary u-full-width" />
-    </form>
-</div>
 
 
 <button ng-click="signOut()" class="alert_btn sign_out">Signout</button>

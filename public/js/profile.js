@@ -101,12 +101,20 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
         );
     });
 
-    // Modals
-    $scope.hideModal = true;
-    $scope.modalClick = function() {
+    // Friend Modal
+    $scope.hideFriendModal = true;
+    $scope.friendModalClick = function() {
         // hideModal = the current states opposite value
         // if true then its false. if false then its true
-        $scope.hideModal = !$scope.hideModal;
+        $scope.hideFriendModal = !$scope.hideFriendModal;
+    }
+
+    // Group Modal
+    $scope.hideGroupModal = true;
+    $scope.groupModalClick = function() {
+        // hideModal = the current states opposite value
+        // if true then its false. if false then its true
+        $scope.hideGroupModal = !$scope.hideGroupModal;
     }
 
     // Grab Users

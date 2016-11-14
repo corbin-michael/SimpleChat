@@ -9,7 +9,7 @@ input, label, button {
 }
 
 
-body {
+html {
     background-color: #f4f4f4;
 }
 
@@ -335,4 +335,86 @@ SIGNUP FORM
     height: 40px;
     padding: 0 15px;
     text-align: center;
+}
+
+
+/************************************
+MODALS
+************************************/
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 9999;
+}
+
+.modal .modal_content {
+    position: absolute;
+    background-color: #f4f4f4;
+    width: 50%;
+    max-width: 560px;
+    min-width: 350px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 150px;
+    padding: 25px;
+}
+
+.modal_content button {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: #f15555;
+    color: #fff;
+}
+
+.modal_content input {
+    width: 100%;
+}
+
+.modal_content ul {
+    margin-bottom: 0;
+}
+
+.modal_content ul li {
+    list-style: none;
+    border-bottom: 1px solid darkgrey;
+    height: 50px;
+    padding: 0 0 10px;
+}
+
+.modal_content ul li:after {
+    content: '';
+    height: 0;
+    clear: both;
+    display: block;
+}
+
+.modal_content .friend_username,
+.modal_content .friend_pic {
+    float: left;
+}
+
+.modal_content .friend_username {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 20px;
+}
+
+.modal_content .friend_pic {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 100%;
+    margin: 0 auto;
+}
+.modal_content .friend_pic img {
+    width: 100%;
+    height: auto;
 }
