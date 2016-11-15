@@ -117,6 +117,14 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
         $scope.hideGroupModal = !$scope.hideGroupModal;
     }
 
+    // Profile Picture Modal
+    $scope.hideProPicModal = true;
+    $scope.proPicModalClick = function() {
+        // hideModal = the current states opposite value
+        // if true then its false. if false then its true
+        $scope.hideProPicModal = !$scope.hideProPicModal;
+    }
+
     // Grab Users
     var usersRef = firebase.database().ref("/users");
     $scope.users = $firebaseArray(usersRef);

@@ -1,0 +1,22 @@
+<div class="modal new_group_modal" ng-hide="hideGroupModal">
+    <div class="modal_content">
+        <button ng-click="groupModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h2>New Group</h2>
+        <form>
+            <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
+
+            <div class="group_friends">
+                <input type="text" ng-model="search_friend" placeholder="Search Friends" />
+                <ul>
+                    <li ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">
+                        <span class="friend_pic">
+                            <img ng-src="{{user.image}}" alt="{{user.username}}" />
+                        </span>
+                        <span class="friend_username">{{user.username}}</span>
+                    </li>
+                </ul>
+            </div>
+            <input type="submit" value="Create Group" class="button-primary u-full-width" />
+        </form>
+    </div>
+</div>

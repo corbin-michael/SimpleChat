@@ -360,8 +360,14 @@ MODALS
     left: 0;
     right: 0;
     margin: 0 auto;
-    top: 150px;
+    top: 50%;
+    transform: translateY(-50%);
     padding: 25px;
+}
+
+.modal_content form,
+.modal_content ul {
+    margin-bottom: 0;
 }
 
 .modal_content button {
@@ -374,10 +380,6 @@ MODALS
 
 .modal_content input {
     width: 100%;
-}
-
-.modal_content ul {
-    margin-bottom: 0;
 }
 
 .modal_content ul li {

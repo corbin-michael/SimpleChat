@@ -4,6 +4,10 @@
     </div>
     <div class="header_name">
         <h1>{{alias}}</h1>
+        <ul class="profile_options">
+            <li ng-click="proPicModalClick()">Add Profile Pic</li>
+            <li ng-click="signOut()">Sign Out</li>
+        </ul>
     </div>
 </div>
 
@@ -12,48 +16,20 @@
     <button class="button one-half column" ng-click="friendModalClick()">Friends</button>
 </div>
 
-<div class="modal users_modal" ng-hide="hideFriendModal">
-    <div class="modal_content">
-        <button ng-click="friendModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <input type="text" ng-model="search_friend" placeholder="Search Friends" />
-        <ul>
-            <li ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">
-                <span class="friend_pic">
-                    <img ng-src="{{user.image}}" alt="{{user.username}}" />
-                </span>
-                <span class="friend_username">{{user.username}}</span>
-            </li>
-        </ul>
-    </div>
-</div>
+<div ng-include="'includes/friends_modal.html'"></div>
+<div ng-include="'includes/group_modal.html'"></div>
 
-<div class="modal new_group_modal" ng-hide="hideGroupModal">
+<div class="modal profile_pic_modal" ng-hide="hideProPicModal">
     <div class="modal_content">
-        <button ng-click="groupModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <h2>New Group</h2>
-        <form>
-            <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
-            <div class="group_friends">
-                <p ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">
-                    <span class="friend_pic">
-                        <img ng-src="{{user.image}}" alt="{{user.username}}" />
-                    </span>
-                    <span class="friend_username">{{user.username}}</span>
-                </p>
-            </div>
-            <input type="submit" value="Create Group" class="button-primary u-full-width" />
-        </form>
+        <button ng-click="proPicModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h1>Edit Profile Picture</h1>
+        <p id="imageNotify"></p>
+        <div class="file_upload_wrap">
+            <progress value="0" max="100" id="fileProgress"></progress>
+            <input type="file" id="fileBtn" />
+        </div>
+        <p class="alert_btn button delete_propic" ng-click="deleteProPic()">Delete ProPic</p>
     </div>
-</div>
-
-<div class="edit_profile profile_section hide">
-    <h1>Add Profile Picture</h1>
-    <p id="imageNotify"></p>
-    <div class="file_upload_wrap">
-        <progress value="0" max="100" id="fileProgress"></progress>
-        <input type="file" id="fileBtn" />
-    </div>
-    <button class="alert_btn delete_propic" ng-click="deleteProPic()">Delete ProPic</button>
 </div>
 
 <div class="groups profile_section">
@@ -65,7 +41,3 @@
         </li>
     </ul>
 </div>
-
-
-
-<button ng-click="signOut()" class="alert_btn sign_out">Signout</button>
