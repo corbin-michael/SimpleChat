@@ -5,7 +5,7 @@
     <div id="chat_wrap">
         <div id="chat_messages">
             <ul>
-                <li ng-repeat="message in messages | orderBy: '-timeStamp'">
+                <li ng-repeat="message in messages | orderBy: 'timeStamp'">
                     <span class="remove" ng-click="deleteMessage(message)" ng-show="showRemove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     <span class="from">{{message.username}}</span>
                     <span class="date">{{message.timeStamp | date:'h:mm a'}}</span>

@@ -1,0 +1,31 @@
+/************************************
+GENERAL
+************************************/
+h1, h2, h3, h4, h5, h6,
+p, li, span, a,
+input, label, button {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+}
+
+html {
+    background-color: #f4f4f4;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100% !important;
+    }
+}
+
+#error {
+    color: #f15555;
+}
+
+#imageNotify {
+    color: #6fdc6f;
+}
+
+.hide {
+    display: none;
+}
