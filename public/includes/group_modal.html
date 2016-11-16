@@ -1,9 +1,13 @@
 <div class="modal new_group_modal" ng-hide="hideGroupModal">
-    <div class="modal_content">
-        <button ng-click="groupModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <h2>New Group</h2>
+    <div class="modal_content modal_lg">
+        <button class="alert_btn close_modal" ng-click="groupModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h4>New Group</h4>
         <form>
             <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
+
+            <ul class="added_friends">
+                <li>Corbin</li>
+            </ul>
 
             <div class="group_friends">
                 <input type="text" ng-model="search_friend" placeholder="Search Friends" />
@@ -13,10 +17,11 @@
                             <img ng-src="{{user.image}}" alt="{{user.username}}" />
                         </span>
                         <span class="friend_username">{{user.username}}</span>
+                        <button class="add_btn">Add +</button>
                     </li>
                 </ul>
             </div>
-            <input type="submit" value="Create Group" class="button-primary u-full-width" />
+            <button type="submit" value="Create Group" class="positive_btn u-full-width create_group_btn">Create Group</button>
         </form>
     </div>
 </div>

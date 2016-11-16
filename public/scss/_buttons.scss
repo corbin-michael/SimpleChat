@@ -1,16 +1,48 @@
-.other_btn {
-    max-width: 400px;
-    background-color: #6fdc6f;
+.positive_btn {
+    //max-width: 400px;
+    background-color: $link;
     color: #fff;
+    border: none !important;
 
     &:hover {
+        background-color: $link_hover;
         color: #fff;
     }
 }
 
 .alert_btn {
     display: block;
-    background-color: #f15555;
+    background-color: $red;
     color: #fff;
-    margin: 10px 0;
+    border: none !important;
+
+    &:hover {
+        background-color: $red_hover;
+        color: #fff;
+    }
+}
+
+.link {
+    color: $blue;
+
+    &:hover {
+        color: $blue_hover;
+        cursor: pointer;
+    }
+}
+
+.add_btn {
+    background-color: $blue;
+    color: #fff;
+    border: none;
+    position: relative;
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:hover {
+        background-color: $blue_hover;
+        cursor: pointer;
+        color: #fff;
+    }
 }

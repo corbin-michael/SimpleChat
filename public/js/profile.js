@@ -101,6 +101,12 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
         );
     });
 
+    //Profile Options
+    $scope.hideProfileOpt = true;
+    $scope.profileOptClick = function() {
+        $scope.hideProfileOpt = !$scope.hideProfileOpt;
+    }
+
     // Friend Modal
     $scope.hideFriendModal = true;
     $scope.friendModalClick = function() {

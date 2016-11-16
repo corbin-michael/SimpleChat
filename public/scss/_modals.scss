@@ -10,12 +10,29 @@ MODALS
     background: rgba(0,0,0,.5);
     z-index: 9999;
 
-    .modal_content {
-        position: absolute;
-        background-color: #f4f4f4;
+    .modal_sm,
+    .modal_md,
+    .modal_lg {
         width: 50%;
         max-width: 560px;
         min-width: 350px;
+    }
+
+    .modal_sm {
+        min-height: 175px;
+    }
+
+    .modal_md {
+        min-height: 400px;
+    }
+
+    .modal_lg {
+        min-height: 515px;
+    }
+
+    .modal_content {
+        position: absolute;
+        background-color: #fff;
         left: 0;
         right: 0;
         margin: 0 auto;
@@ -23,25 +40,29 @@ MODALS
         transform: translateY(-50%);
         padding: 25px;
 
+        h4 {
+            text-align: center;
+        }
 
         form,
         ul {
             margin-bottom: 0;
         }
 
-        button {
+        .close_modal {
             position: absolute;
-            top: -40px;
+            top: 0px;
             right: 0;
-            background: #f15555;
-            color: #fff;
+            border-radius: 0;
         }
 
         input {
             width: 100%;
+            margin-bottom: 10px;
         }
 
         ul {
+
             li {
                 list-style: none;
                 border-bottom: 1px solid darkgrey;
@@ -54,6 +75,33 @@ MODALS
                     display: block;
                 }
             }
+        }
+
+        .added_friends {
+            height: 95px;
+            overflow: scroll;
+            margin-bottom: 10px;
+
+            li {
+                border-bottom: none;
+                display: inline-block;
+                background-color: rgba(#000, .1);
+                height: auto;
+                padding: 1px 10px;
+                margin: 3px;
+                border-radius: 50px;
+            }
+        }
+        .group_friends {
+            ul {
+                height: 205px;
+                overflow: scroll;
+            }
+        }
+
+        .create_group_btn {
+            position: relative;
+            top: 15px;
         }
 
         .friend_username,

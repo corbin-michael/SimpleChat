@@ -3,8 +3,8 @@
         <img ng-src="{{imageSrc}}" id="profileImg" />
     </div>
     <div class="header_name">
-        <h1>{{alias}}</h1>
-        <ul class="profile_options">
+        <h1 ng-click="profileOptClick()">{{alias}} <i class="fa fa-chevron-down" aria-hidden="true"></i></h1>
+        <ul class="profile_options" ng-hide="hideProfileOpt">
             <li ng-click="proPicModalClick()">Add Profile Pic</li>
             <li ng-click="signOut()">Sign Out</li>
         </ul>
@@ -12,27 +12,27 @@
 </div>
 
 <div class="row">
-    <button class="button one-half column" ng-click="groupModalClick()">Add Group</button>
-    <button class="button one-half column" ng-click="friendModalClick()">Friends</button>
+    <button class="positive_btn one-half column" ng-click="groupModalClick()">Add Group</button>
+    <button class="positive_btn one-half column" ng-click="friendModalClick()">Friends</button>
 </div>
 
 <div ng-include="'includes/friends_modal.html'"></div>
 <div ng-include="'includes/group_modal.html'"></div>
 
 <div class="modal profile_pic_modal" ng-hide="hideProPicModal">
-    <div class="modal_content">
-        <button ng-click="proPicModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <h1>Edit Profile Picture</h1>
+    <div class="modal_content modal_sm">
+        <button class="alert_btn close_modal" ng-click="proPicModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h4>Edit Profile Picture</h4>
         <p id="imageNotify"></p>
         <div class="file_upload_wrap">
             <progress value="0" max="100" id="fileProgress"></progress>
             <input type="file" id="fileBtn" />
         </div>
-        <p class="alert_btn button delete_propic" ng-click="deleteProPic()">Delete ProPic</p>
+        <button class="alert_btn delete_propic" ng-click="deleteProPic()">Delete ProPic</button>
     </div>
 </div>
 
-<div class="groups profile_section">
+<div class="groups profile_section hide">
     <h1>My Groups</h1>
     <ul class="groups_listing">
         <li class="group new_group"><i class="fa fa-plus" aria-hidden="true"></i><span>New Group</span></li>

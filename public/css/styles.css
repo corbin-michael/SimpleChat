@@ -1,39 +1,66 @@
 /************************************
+COLORS
+************************************/
+/************************************
 GENERAL
 ************************************/
 h1, h2, h3, h4, h5, h6,
 p, li, span, a,
 input, label, button {
   font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+  color: #535353; }
 
 html {
-  background-color: #f4f4f4; }
+  background-color: #ebebeb; }
 
 @media screen and (max-width: 768px) {
   .container {
     width: 100% !important; } }
 #error {
-  color: #f15555; }
+  color: #ea4335; }
 
 #imageNotify {
-  color: #6fdc6f; }
+  color: #00CC7C; }
 
 .hide {
   display: none; }
 
-.other_btn {
-  max-width: 400px;
-  background-color: #6fdc6f;
-  color: #fff; }
-  .other_btn:hover {
+.positive_btn {
+  background-color: #00CC7C;
+  color: #fff;
+  border: none !important; }
+  .positive_btn:hover {
+    background-color: rgba(0, 204, 124, 0.7);
     color: #fff; }
 
 .alert_btn {
   display: block;
-  background-color: #f15555;
+  background-color: #ea4335;
   color: #fff;
-  margin: 10px 0; }
+  border: none !important; }
+  .alert_btn:hover {
+    background-color: rgba(234, 67, 53, 0.7);
+    color: #fff; }
+
+.link {
+  color: #4867aa; }
+  .link:hover {
+    color: rgba(72, 103, 170, 0.7);
+    cursor: pointer; }
+
+.add_btn {
+  background-color: #4867aa;
+  color: #fff;
+  border: none;
+  position: relative;
+  float: right;
+  top: 50%;
+  transform: translateY(-50%); }
+  .add_btn:hover {
+    background-color: rgba(72, 103, 170, 0.7);
+    cursor: pointer;
+    color: #fff; }
 
 /************************************
 HEADER
@@ -51,12 +78,38 @@ HEADER
       width: 100%;
       height: auto; }
   #header .header_name {
-    margin-top: 10px; }
+    margin-top: 10px;
+    position: relative; }
     #header .header_name > h1 {
       font-size: 18px;
-      text-align: center; }
+      margin: 0 auto;
+      display: table; }
+      #header .header_name > h1:hover {
+        color: rgba(0, 204, 124, 0.7);
+        cursor: pointer; }
+      #header .header_name > h1 i {
+        margin-left: 3px;
+        font-size: 11px; }
       #header .header_name > h1 a {
         text-decoration: none; }
+  #header .profile_options {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.4);
+    width: 175px;
+    padding: 0px; }
+    #header .profile_options li {
+      list-style: none;
+      text-align: center;
+      padding: 5px 0;
+      margin: 0; }
+      #header .profile_options li:hover {
+        background-color: #00CC7C;
+        color: #fff;
+        cursor: pointer; }
 
 /************************************
 SIGNUP FORM
@@ -67,7 +120,7 @@ SIGNUP FORM
   padding: 25px;
   background-color: #fff;
   box-shadow: 0 0 3px 3px rgba(128, 128, 128, 0.38); }
-  .form_wrap input {
+  .form_wrap input, .form_wrap button {
     margin: 15px 0;
     width: 100%;
     max-width: 400px;
@@ -86,29 +139,40 @@ MODALS
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999; }
-  .modal .modal_content {
-    position: absolute;
-    background-color: #f4f4f4;
+  .modal .modal_sm,
+  .modal .modal_md,
+  .modal .modal_lg {
     width: 50%;
     max-width: 560px;
-    min-width: 350px;
+    min-width: 350px; }
+  .modal .modal_sm {
+    min-height: 175px; }
+  .modal .modal_md {
+    min-height: 400px; }
+  .modal .modal_lg {
+    min-height: 515px; }
+  .modal .modal_content {
+    position: absolute;
+    background-color: #fff;
     left: 0;
     right: 0;
     margin: 0 auto;
     top: 50%;
     transform: translateY(-50%);
     padding: 25px; }
+    .modal .modal_content h4 {
+      text-align: center; }
     .modal .modal_content form,
     .modal .modal_content ul {
       margin-bottom: 0; }
-    .modal .modal_content button {
+    .modal .modal_content .close_modal {
       position: absolute;
-      top: -40px;
+      top: 0px;
       right: 0;
-      background: #f15555;
-      color: #fff; }
+      border-radius: 0; }
     .modal .modal_content input {
-      width: 100%; }
+      width: 100%;
+      margin-bottom: 10px; }
     .modal .modal_content ul li {
       list-style: none;
       border-bottom: 1px solid darkgrey;
@@ -119,6 +183,24 @@ MODALS
         height: 0;
         clear: both;
         display: block; }
+    .modal .modal_content .added_friends {
+      height: 95px;
+      overflow: scroll;
+      margin-bottom: 10px; }
+      .modal .modal_content .added_friends li {
+        border-bottom: none;
+        display: inline-block;
+        background-color: rgba(0, 0, 0, 0.1);
+        height: auto;
+        padding: 1px 10px;
+        margin: 3px;
+        border-radius: 50px; }
+    .modal .modal_content .group_friends ul {
+      height: 205px;
+      overflow: scroll; }
+    .modal .modal_content .create_group_btn {
+      position: relative;
+      top: 15px; }
     .modal .modal_content .friend_username,
     .modal .modal_content .friend_pic {
       float: left; }

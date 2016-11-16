@@ -1,6 +1,7 @@
 <div class="modal users_modal" ng-hide="hideFriendModal">
-    <div class="modal_content">
-        <button ng-click="friendModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
+    <div class="modal_content modal_lg">
+        <h4>Friends</h4>
+        <button class="alert_btn close_modal" ng-click="friendModalClick()"><i class="fa fa-times" aria-hidden="true"></i></button>
         <input type="text" ng-model="search_friend" placeholder="Search Friends" />
         <ul>
             <li ng-repeat="user in users | filter:search_friend" ng-if="user.uid != currentUID">

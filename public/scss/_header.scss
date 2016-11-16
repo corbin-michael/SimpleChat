@@ -20,13 +20,49 @@ HEADER
 
     .header_name {
         margin-top: 10px;
+        position: relative;
 
         > h1 {
             font-size: 18px;
-            text-align: center;
+            margin: 0 auto;
+            display: table;
+
+            &:hover {
+                color: $link_hover;
+                cursor: pointer;
+            }
+
+            i {
+                margin-left: 3px;
+                font-size: 11px;
+            }
 
             a {
                 text-decoration: none;
+            }
+        }
+    }
+
+    .profile_options {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        background-color: #fff;
+        box-shadow: 0px 0px 2px 1px rgba(#000, .4);
+        width: 175px;
+        padding: 0px;
+
+        li {
+            list-style: none;
+            text-align: center;
+            padding: 5px 0;
+            margin: 0;
+
+            &:hover {
+                background-color: $link;
+                color: #fff;
+                cursor: pointer;
             }
         }
     }

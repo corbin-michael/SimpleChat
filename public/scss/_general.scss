@@ -1,4 +1,16 @@
 /************************************
+COLORS
+************************************/
+$blue: #4867aa;
+$blue_hover: rgba($blue, .7);
+$red: #ea4335;
+$red_hover: rgba($red, .7);
+$link: #00CC7C;
+$link_hover: rgba($link, .7);
+$grey: #ebebeb;
+$text_color: #535353;
+
+/************************************
 GENERAL
 ************************************/
 h1, h2, h3, h4, h5, h6,
@@ -6,10 +18,11 @@ p, li, span, a,
 input, label, button {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 300;
+    color: $text_color;
 }
 
 html {
-    background-color: #f4f4f4;
+    background-color: $grey;
 }
 
 @media screen and (max-width: 768px) {
@@ -19,11 +32,11 @@ html {
 }
 
 #error {
-    color: #f15555;
+    color: $red;
 }
 
 #imageNotify {
-    color: #6fdc6f;
+    color: $link;
 }
 
 .hide {
