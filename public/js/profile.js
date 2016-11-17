@@ -136,6 +136,28 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
     $scope.users = $firebaseArray(usersRef);
     $scope.currentUID = user.uid;
 
+
+    // Creating group
+    $scope.friendsToAdd = [];
+    $scope.addToGroup = function(username) {
+        $scope.friendsToAdd.push(username);
+    }
+    $scope.createGroup = function() {
+        var groupData = {
+            members: $scope.friendsToAdd,
+            groupName: $scope.groupName
+        }
+        var newGroupKey = firebase.database().ref().child('groups').push().key;
+        var addGroupData = {};
+        addGroupData['groups/' + newGroupKey];
+        addGroupData['users/groups/' + ];
+
+        $scope.friendsToAdd = [];
+        $scope.groupName = '';
+
+        return firebase.database().ref().child('groups/' + newGroupKey).update(groupData);
+    }
+
     // Sign User Out
     $scope.signOut = function() {
         firebase.auth().signOut().then(function() {

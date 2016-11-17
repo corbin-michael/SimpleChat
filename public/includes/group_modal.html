@@ -6,7 +6,7 @@
             <input type="text" ng-model="groupName" placeholder="Group Name" class="u-full-width" /><br />
 
             <ul class="added_friends">
-                <li>Corbin</li>
+                <li ng-repeat="friend in friendsToAdd">{{friend}}</li>
             </ul>
 
             <div class="group_friends">
@@ -17,11 +17,11 @@
                             <img ng-src="{{user.image}}" alt="{{user.username}}" />
                         </span>
                         <span class="friend_username">{{user.username}}</span>
-                        <button class="add_btn">Add +</button>
+                        <button class="add_btn" ng-click="addToGroup(user.username)">Add +</button>
                     </li>
                 </ul>
             </div>
-            <button type="submit" value="Create Group" class="positive_btn u-full-width create_group_btn">Create Group</button>
+            <button type="submit" ng-click="createGroup()" class="positive_btn u-full-width create_group_btn">Create Group</button>
         </form>
     </div>
 </div>
