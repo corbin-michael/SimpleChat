@@ -145,11 +145,12 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
     console.log($scope.groupName);
     $scope.createGroup = function() {
         var groupNameForm = document.getElementById('groupName');
+        var newGroupKey = firebase.database().ref().child('groups').push().key;
         var groupData = {
             members: $scope.friendsToAdd,
-            groupName: groupNameForm.value
+            groupName: groupNameForm.value,
+            groupID: newGroupKey
         }
-        var newGroupKey = firebase.database().ref().child('groups').push().key;
         //var addGroupData = {};
         //addGroupData['/groups/' + newGroupKey] = groupData;
 
