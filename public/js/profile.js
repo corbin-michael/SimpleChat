@@ -142,20 +142,21 @@ profile.controller("ProfileCtrl", ['$scope', '$firebaseArray', '$location', '$ro
     $scope.addToGroup = function(username) {
         $scope.friendsToAdd.push(username);
     }
+    console.log($scope.groupName);
     $scope.createGroup = function() {
+        var groupNameForm = document.getElementById('groupName');
         var groupData = {
             members: $scope.friendsToAdd,
-            groupName: $scope.groupName
+            groupName: groupNameForm.value
         }
         var newGroupKey = firebase.database().ref().child('groups').push().key;
-        var addGroupData = {};
-        addGroupData['groups/' + newGroupKey];
-        addGroupData['users/groups/' + ];
+        //var addGroupData = {};
+        //addGroupData['/groups/' + newGroupKey] = groupData;
 
         $scope.friendsToAdd = [];
-        $scope.groupName = '';
+        groupNameForm.value = '';
 
-        return firebase.database().ref().child('groups/' + newGroupKey).update(groupData);
+        return firebase.database().ref().child('groups/' + newGroupKey).set(groupData);
     }
 
     // Sign User Out
